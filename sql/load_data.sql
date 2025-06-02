@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS cities (
     CityID INT PRIMARY KEY,
     CityName VARCHAR(45),
     zipcode DECIMAL(5,0),
-    CountryID INT
+    CountryID INT,
+    FOREIGN KEY (CountryID) REFERENCES countries(CountryID)
 );
 
 -- tabla categories
@@ -33,10 +34,11 @@ CREATE TABLE IF NOT EXISTS products (
     Price DECIMAL(10,4),
     CategoryID INT,
     Class VARCHAR(45),
-    ModifyDate DATETIME,
+    ModifyDate TIME,
     Resistant VARCHAR(45),
     IsAllergic VARCHAR(10),
-    VitalityDays DECIMAL(3,0)
+    VitalityDays DECIMAL(3,0),
+    FOREIGN KEY (CategoryID) REFERENCES categories(CategoryID)
 );
 
 -- tabla employees
@@ -48,7 +50,8 @@ CREATE TABLE IF NOT EXISTS employees (
     BirthDate DATE,
     Gender VARCHAR(1),
     CityID INT,
-    HireDate DATETIME
+    HireDate DATETIME,
+    FOREIGN KEY (CityID) REFERENCES cities(CityID)
 );
 
 -- table customers
@@ -58,7 +61,8 @@ CREATE TABLE IF NOT EXISTS customers (
     MiddleInitial VARCHAR(1),
     LastName VARCHAR(45),
     CityID INT,
-    Address VARCHAR(90)
+    Address VARCHAR(90),
+    FOREIGN KEY (CityID) REFERENCES cities(CityID)
 );
 
 -- tabla sales
@@ -70,8 +74,11 @@ CREATE TABLE IF NOT EXISTS sales (
     Quantity INT,
     Discount DECIMAL(10,2),
     TotalPrice DECIMAL(10,2),
-    SalesDate DATETIME,
-    TransactionNumber VARCHAR(20)
+    SalesDate TIME,
+    TransactionNumber VARCHAR(20),
+    FOREIGN KEY (SalesPersonID) REFERENCES employees(EmployeeID),
+    FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES products(ProductID)
 );
 
 -- activar la propiedad local infile para cargar archivos

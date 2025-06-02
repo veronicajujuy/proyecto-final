@@ -1,10 +1,13 @@
-class Country:
-    def __init__(self, country_id, country_name, country_code):
-        self.__country_id = country_id
-        self.__country_name = country_name
-        self.__country_code = country_code
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+from src.db.database import Base
 
 
-@property
-def label(self):
-    return f"{self.__country_name} ({self.__country_code})"
+class Country(Base):
+    __tablename__ = "countries"
+
+    CountryID = Column(Integer, primary_key=True)
+    CountryName = Column(String(45))
+    CountryCode = Column(String(2))
+
+    cities = relationship("City", back_populates="country")

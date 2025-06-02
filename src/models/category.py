@@ -1,16 +1,12 @@
-class Category:
-    def __init__(self, category_id, category_name):
-        self.__category_id = category_id
-        self.category_name = category_name
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+from src.db.database import Base
 
 
-@property
-def category_name(self):
-    return self.__category_name
+class Category(Base):
+    __tablename__ = "categories"
 
+    CategoryID = Column(Integer, primary_key=True)
+    CategoryName = Column(String(45))
 
-@category_name.setter
-def category_name(self, value):
-    if not value:
-        raise ValueError("Category name cannot be empty")
-    self.__category_name = value
+    products = relationship("Product", back_populates="category")
