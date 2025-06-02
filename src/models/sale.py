@@ -1,38 +1,21 @@
-class Sale:
-    def __init__(
-        self,
-        sale_id,
-        salesperson_id,
-        customer_id,
-        product_id,
-        quantity,
-        discount,
-        total_price,
-        sales_date,
-        transaction_number,
-    ):
-        self.__sale_id = sale_id
-        self.__salesperson_id = salesperson_id
-        self.__customer_id = customer_id
-        self.__product_id = product_id
-        self.__quantity = quantity
-        self.__discount = discount
-        self.__total_price = total_price
-        self.__sales_date = sales_date
-        self.__transaction_number = transaction_number
+from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL, Time
+from sqlalchemy.orm import relationship
+from src.db.database import Base
 
 
-@property
-def quantity(self):
-    return self.__quantity
+class Sale(Base):
+    __tablename__ = "sales"
 
+    SalesID = Column(Integer, primary_key=True)
+    SalesPersonID = Column(Integer, ForeignKey("employees.EmployeeID"))
+    CustomerID = Column(Integer, ForeignKey("customers.CustomerID"))
+    ProductID = Column(Integer, ForeignKey("products.ProductID"))
+    Quantity = Column(Integer)
+    Discount = Column(DECIMAL(10, 2))
+    TotalPrice = Column(DECIMAL(10, 2))
+    SalesDate = Column(Time)
+    TransactionNumber = Column(String(20))
 
-@quantity.setter
-def quantity(self, value):
-    if value < 0:
-        raise ValueError("Quantity cannot be negative")
-    self.__quantity = value
-
-
-def calculate_final_price(self):
-    return self.__total_price - (self.__total_price * self.__discount / 100)
+    employee = relationship("Employee", back_populates="sales")
+    customer = relationship("Customer", back_populates="sales")
+    product = relationship("Product", back_populates="sales")

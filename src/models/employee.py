@@ -1,24 +1,19 @@
-class Employee:
-    def __init__(
-        self,
-        employee_id,
-        first_name,
-        middle_initial,
-        last_name,
-        birth_date,
-        gender,
-        city_id,
-        hire_date,
-    ):
-        self.__employee_id = employee_id
-        self.__first_name = first_name
-        self.__middle_initial = middle_initial
-        self.__last_name = last_name
-        self.__birth_date = birth_date
-        self.__gender = gender
-        self.__city_id = city_id
-        self.__hire_date = hire_date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime
+from sqlalchemy.orm import relationship
+from src.db.database import Base
 
 
-def get_full_name(self):
-    return f"{self.__first_name} {self.__middle_initial} {self.__last_name}".strip()
+class Employee(Base):
+    __tablename__ = "employees"
+
+    EmployeeID = Column(Integer, primary_key=True)
+    FirstName = Column(String(45))
+    MiddleInitial = Column(String(1))
+    LastName = Column(String(45))
+    BirthDate = Column(Date)
+    Gender = Column(String(1))
+    CityID = Column(Integer, ForeignKey("cities.CityID"))
+    HireDate = Column(DateTime)
+
+    city = relationship("City", back_populates="employees")
+    sales = relationship("Sale", back_populates="employee")

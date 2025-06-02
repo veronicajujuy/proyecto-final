@@ -1,11 +1,16 @@
-class City:
-    def __init__(self, city_id, city_name, zipcode, country_id):
-        self.__city_id = city_id
-        self.__city_name = city_name
-        self.__zipcode = zipcode
-        self.__country_id = country_id
+from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL
+from sqlalchemy.orm import relationship
+from src.db.database import Base
 
 
-@property
-def label(self):
-    return f"{self.__city_name} ({self.__zipcode})"
+class City(Base):
+    __tablename__ = "cities"
+
+    CityID = Column(Integer, primary_key=True)
+    CityName = Column(String(45))
+    CountryID = Column(DECIMAL(5, 0))
+    CountryID = Column(Integer, ForeignKey("countries.CountryID"))
+
+    country = relationship("Country", back_populates="cities")
+    employees = relationship("Employee", back_populates="city")
+    customers = relationship("Customer", back_populates="city")
