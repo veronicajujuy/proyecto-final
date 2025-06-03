@@ -6,8 +6,8 @@ class Customer:
         self.__first_name = first_name
         self.__middle_initial = middle_initial
         self.__last_name = last_name
-        self.city_id = city_id
-        self.address = address
+        self.__city_id = city_id
+        self.__address = address
 
 
 @property
@@ -22,5 +22,5 @@ def address(self, value):
     self.__address = value
 
 
-def full_name(self):
+def get_full_name(self):
     return f"{self.__first_name} {self.__middle_initial} {self.__last_name}".strip()

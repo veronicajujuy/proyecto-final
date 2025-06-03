@@ -16,7 +16,7 @@ class Employee:
         self.__last_name = last_name
         self.__birth_date = birth_date
         self.__gender = gender
-        self.city_id = city_id
+        self.__city_id = city_id
         self.__hire_date = hire_date
 
 

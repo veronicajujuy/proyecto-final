@@ -15,7 +15,7 @@ class Sale:
         self.__salesperson_id = salesperson_id
         self.__customer_id = customer_id
         self.__product_id = product_id
-        self.quantity = quantity
+        self.__quantity = quantity
         self.__discount = discount
         self.__total_price = total_price
         self.__sales_date = sales_date
