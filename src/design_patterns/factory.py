@@ -44,8 +44,8 @@ class SalesSummary(BaseFactory):
     Methods:
         from_series(serie): Crea una instancia de SalesSummary a partir de una serie de datos.
 
-    Usage:
-        sales_summary = SalesSummary.from_series(serie)
+    Ejemplo:
+        >>> sales_summary = SalesSummary.from_series(serie)
 
     returns:
         SalesSummary: Una instancia de la clase SalesSummary con los datos de la venta.
@@ -75,6 +75,10 @@ class SalesSummary(BaseFactory):
 
     @classmethod
     def from_series(cls, serie):
+        """
+        Crea una instancia de SalesSummary a partir de una serie de datos.
+        Esta serie debe contener las columnas necesarias para crear la instancia.
+        """
         return cls(
             sale_id=serie["SalesID"],
             product_id=serie["ProductID"],
@@ -94,13 +98,14 @@ class CustomerLocationInfo(BaseFactory):
     Antes de usar esta clase, asegúrate de que el DataFrame contiene las columnas necesarias.
 
     Ejemplo de query para obtener los datos (usar en Jupyter Notebook o similar):
-    ```sql
-    select SalesID, s.ProductID, ProductName, Quantity, TotalPrice, c.CustomerID, coalesce(concat(c.FirstName, " ", c.MiddleInitial, ". ", c.LastName), "Sin nombre") as CustomerName,
-    e.EmployeeID, concat(e.FirstName, " ", e.MiddleInitial, ". ", e.LastName) as EmployeeName
-    from sales s join products p on s.productid = p.ProductID
-    join customers c on s.CustomerID = c.CustomerID 
-    join employees e on s.SalesPersonID = e.EmployeeID
-    order by c.CustomerID;
+
+        ```sql
+        select SalesID, s.ProductID, ProductName, Quantity, TotalPrice, c.CustomerID, coalesce(concat(c.FirstName, " ", c.MiddleInitial, ". ", c.LastName), "Sin nombre") as CustomerName,
+        e.EmployeeID, concat(e.FirstName, " ", e.MiddleInitial, ". ", e.LastName) as EmployeeName
+        from sales s join products p on s.productid = p.ProductID
+        join customers c on s.CustomerID = c.CustomerID 
+        join employees e on s.SalesPersonID = e.EmployeeID
+        order by c.CustomerID;
     ```
 
     Args:
@@ -116,8 +121,8 @@ class CustomerLocationInfo(BaseFactory):
     Methods:
         from_series(serie): Crea una instancia de CustomerLocationInfo a partir de una serie de datos.
 
-    Usage:
-        customer_location = CustomerLocationInfo.from_series(serie)
+    Ejemplo:
+        >>> customer_location = CustomerLocationInfo.from_series(serie)
 
     returns:
         CustomerLocationInfo: Una instancia de la clase CustomerLocationInfo con los datos del cliente.
@@ -143,6 +148,9 @@ class CustomerLocationInfo(BaseFactory):
 
     @classmethod
     def from_series(cls, serie):
+        """
+        Crea una instancia de CustomerLocationInfo a partir de una serie de datos.
+        """
         return cls(
             customer_id=serie["CustomerID"],
             first_name=serie["FirstName"],

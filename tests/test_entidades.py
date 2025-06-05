@@ -17,6 +17,12 @@ from src.utils.logger import logger
     ],
 )
 def test_entidad_consulta(model):
+    """
+    Prueba unitaria para verificar la consulta de una entidad en la base de datos.
+    Esta prueba asegura que al consultar la primera instancia de una entidad,
+    se obtenga un objeto del tipo esperado o None si no hay instancias.
+    """
+
     nombre, clase = model
     db = DBConnection()
     session = db.get_session()

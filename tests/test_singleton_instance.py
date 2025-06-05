@@ -2,6 +2,10 @@ from src.db.database import DBConnection
 
 
 def test_singleton_instance():
+    """
+    Prueba unitaria para verificar que la clase DBConnection implementa correctamente el patrón Singleton.
+    Esta prueba asegura que todas las instancias de DBConnection son la misma,
+    """
     db1 = DBConnection()
     db2 = DBConnection()
 

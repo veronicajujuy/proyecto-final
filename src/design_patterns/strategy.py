@@ -16,6 +16,7 @@ class TotalSalesByEmployee(ReportStrategy):
     """
     Esta clase genera un informe de ventas por empleado, mostrando el total de ventas
     por cada vendedor.
+
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,
         con columnas "EmployeeID", "TotalPrice" y "EmployeeName".
@@ -46,10 +47,13 @@ class AverageSalesByEmployee(ReportStrategy):
     """
     Esta clase genera un informe de ventas por empleado, mostrando el promedio de ventas
     por cada vendedor.
+
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,
         con columnas "EmployeeID", "TotalPrice" y "EmployeeName".
         key (str): Clave por la cual se ordenará el informe, puede ser "TotalPrice" o cualquier otra columna relevante.
+        ascending (bool): Indica si el ordenamiento debe ser ascendente o descendente.
+
     Returns:
         pd.DataFrame: DataFrame con el informe de ventas por empleado,
         incluyendo "IDVendedor", "Nombre Apellido Vendedor" y "Promedio de ventas".
@@ -78,14 +82,17 @@ class ProductSalesByEmployee(ReportStrategy):
     """
     Esta clase genera un informe de ventas por empleado, mostrando la cantidad de productos
     vendidos por cada vendedor.
+
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,
         con columnas "EmployeeID", "ProductID" y "EmployeeName".
         key (str): Clave por la cual se ordenará el informe,
         puede ser por id de producto "ProductID", nombre de Empleado "EmployeeName"
         o cualquier otra columna relevante.
+        ascending (bool): Indica si el ordenamiento debe ser ascendente o descendente.
+
     Returns:
-        pd.DataFrame: DataFrame con el informe de ventas por empleado,
+        >>> pd.DataFrame: DataFrame con el informe de ventas por empleado,
         incluyendo "IDVendedor", "Nombre Apellido Vendedor" y "Cantidad de productos vendidos".
     """
 
