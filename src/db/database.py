@@ -7,7 +7,7 @@ from src.utils.logger import logger
 Base = declarative_base()
 
 
-class DBConnection:
+class DBConnection:    
     _instance = None
 
     def __new__(cls):

@@ -3,67 +3,106 @@ import pandas as pd
 
 
 class ReportStrategy(ABC):
+    """
+    Clase base abstracta que define estrategias de generación de informes.
+    """
+
     @abstractmethod
-    def generate_report(self, data: pd.DataFrame, key) -> pd.DataFrame:
+    def generate_report(self, data: pd.DataFrame, key, ascending: bool) -> pd.DataFrame:
         pass
 
 
 class TotalSalesByEmployee(ReportStrategy):
-    def generate_report(self, df,key):
-        ventas = (
-            df.groupby("SalesPersonID")[["TotalPrice"]]
-            .sum()
-            .sort_values(key, ascending=False)
-        )
-        nombres = df[["SalesPersonID", "Firstname", "LastName"]].drop_duplicates(
-            subset="SalesPersonID"
+    """
+    Esta clase genera un informe de ventas por empleado, mostrando el total de ventas
+    por cada vendedor.
+    Args:
+        df (pd.DataFrame): DataFrame que contiene las ventas,
+        con columnas "EmployeeID", "TotalPrice" y "EmployeeName".
+        key (str): Clave por la cual se ordenará el informe, puede ser "TotalPrice" o cualquier otra columna relevante.
+        acscending (bool): Indica si el ordenamiento debe ser ascendente o descendente.
+
+    Returns:
+        pd.DataFrame: DataFrame con el informe de ventas por empleado,
+        incluyendo "IDVendedor", "Nombre Apellido Vendedor" y "TotalVentas".
+    """
+
+    def generate_report(self, df, key, ascending=True):
+        ventas = df.groupby("EmployeeID")[["TotalPrice"]].sum()
+        nombres = df[["EmployeeID", "EmployeeName"]].drop_duplicates(
+            subset="EmployeeID"
         )
 
-        resultado = ventas.merge(nombres, on="SalesPersonID", how="left")
+        resultado = ventas.merge(nombres, on="EmployeeID", how="left")
 
-        resultado = resultado[["SalesPersonID", "Firstname", "LastName", "TotalPrice"]]
-        resultado.sort_values(key, ascending=False, inplace=True)
-        resultado.columns = ["IDVendedor", "Nombre", "Apellido", "TotalVentas"]
+        resultado = resultado[["EmployeeID", "EmployeeName", "TotalPrice"]]
+        resultado.sort_values(key, ascending=ascending, inplace=True)
+        resultado.columns = ["IDVendedor", "Nombre Apellido Vendedor", "TotalVentas"]
 
         return resultado
 
 
 class AverageSalesByEmployee(ReportStrategy):
-    def generate_report(self, df, key):
-        ventas = (
-            df.groupby("SalesPersonID")[["TotalPrice"]]
-            .mean()
-            .round(2)
-            .sort_values(key, ascending=False)
-        )
-        nombres = df[["SalesPersonID", "Firstname", "LastName"]].drop_duplicates(
-            subset="SalesPersonID"
+    """
+    Esta clase genera un informe de ventas por empleado, mostrando el promedio de ventas
+    por cada vendedor.
+    Args:
+        df (pd.DataFrame): DataFrame que contiene las ventas,
+        con columnas "EmployeeID", "TotalPrice" y "EmployeeName".
+        key (str): Clave por la cual se ordenará el informe, puede ser "TotalPrice" o cualquier otra columna relevante.
+    Returns:
+        pd.DataFrame: DataFrame con el informe de ventas por empleado,
+        incluyendo "IDVendedor", "Nombre Apellido Vendedor" y "Promedio de ventas".
+    """
+
+    def generate_report(self, df, key, ascending=True):
+        ventas = df.groupby("EmployeeID")[["TotalPrice"]].mean().round(2)
+        nombres = df[["EmployeeID", "EmployeeName"]].drop_duplicates(
+            subset="EmployeeID"
         )
 
-        resultado = ventas.merge(nombres, on="SalesPersonID", how="left")
+        resultado = ventas.merge(nombres, on="EmployeeID", how="left")
 
-        resultado = resultado[["SalesPersonID", "Firstname", "LastName", "TotalPrice"]]
-        resultado.sort_values(key, ascending=False, inplace=True)
-        resultado.columns = ["IDVendedor", "Nombre", "Apellido", "Promedio de ventas"]
+        resultado = resultado[["EmployeeID", "EmployeeName", "TotalPrice"]]
+        resultado.sort_values(key, ascending=ascending, inplace=True)
+        resultado.columns = [
+            "IDVendedor",
+            "Nombre Apellido Vendedor",
+            "Promedio de ventas",
+        ]
 
         return resultado
 
 
-class TopProductSalesByEmployee(ReportStrategy):
-    def generate_report(self, df, key):
-        ventas = (
-            df.groupby("SalesPersonID")[["ProductID"]]
-            .count()
-            .sort_values(key, ascending=False)
-        )
-        nombres = df[["SalesPersonID", "Firstname", "LastName"]].drop_duplicates(
-            subset="SalesPersonID"
+class ProductSalesByEmployee(ReportStrategy):
+    """
+    Esta clase genera un informe de ventas por empleado, mostrando la cantidad de productos
+    vendidos por cada vendedor.
+    Args:
+        df (pd.DataFrame): DataFrame que contiene las ventas,
+        con columnas "EmployeeID", "ProductID" y "EmployeeName".
+        key (str): Clave por la cual se ordenará el informe,
+        puede ser por id de producto "ProductID", nombre de Empleado "EmployeeName"
+        o cualquier otra columna relevante.
+    Returns:
+        pd.DataFrame: DataFrame con el informe de ventas por empleado,
+        incluyendo "IDVendedor", "Nombre Apellido Vendedor" y "Cantidad de productos vendidos".
+    """
+
+    def generate_report(self, df, key, ascending=True):
+        ventas = df.groupby("EmployeeID")[["ProductID"]].count()
+        nombres = df[["EmployeeID", "EmployeeName"]].drop_duplicates(
+            subset="EmployeeID"
         )
 
-        resultado = ventas.merge(nombres, on="SalesPersonID", how="left")
+        resultado = ventas.merge(nombres, on="EmployeeID", how="left")
 
-        resultado = resultado[["SalesPersonID", "Firstname", "LastName", "ProductID"]]
-        resultado.sort_values(key, ascending=False, inplace=True)
-        resultado.columns = ["IDVendedor", "Nombre", "Apellido", "Producto mas vendido"]
+        resultado = resultado[["EmployeeID", "EmployeeName", "ProductID"]]
+        resultado.sort_values(key, ascending=ascending, inplace=True)
+        resultado.columns = [
+            "IDVendedor",
+            "Nombre Apellido Vendedor",
+            "Cantidad de productos vendidos",
+        ]
 
         return resultado
