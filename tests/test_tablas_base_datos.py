@@ -12,6 +12,7 @@ def test_cliente_y_ciudad():
 
     assert cliente.city.CityName is not None
     assert cliente.city.CityName != ""
+    session.close()
 
 
 def test_empleados_ciudad_pais():
@@ -25,6 +26,20 @@ def test_empleados_ciudad_pais():
     assert empleado.city.CityName != ""
     assert empleado.city.country.CountryName is not None
     assert empleado.city.country.CountryName != ""
+
+def test_categoria_tiene_nombre_y_productos():
+    session = DBConnection().get_session()
+    categoria = session.query(Category).first()
+    if categoria:
+        logger.info(
+            f"Categoría: {categoria.CategoryName}, Productos: {len(categoria.products) if categoria.products else 0}"
+        )
+        assert categoria.CategoryName is not None
+        assert categoria.CategoryName != ""
+        assert hasattr(categoria, "products") # Verifica que la relación exista
+        if categoria.products:
+            assert isinstance(categoria.products[0], Product)
+    session.close()
 
 
 def test_producto_tiene_categoria():
@@ -47,3 +62,5 @@ def test_venta_tiene_cliente_producto_empleado():
 
         assert venta.employee is not None
         assert isinstance(venta.employee, Employee)
+
+    session.close()

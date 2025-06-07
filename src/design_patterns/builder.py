@@ -1,6 +1,5 @@
 import pandas as pd
 from src.design_patterns.strategy import ReportStrategy
-from src.utils.logger import logger
 
 
 class ReportBuilder:
