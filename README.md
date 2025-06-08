@@ -62,7 +62,7 @@ proyecto_final/
 
 Puedes encontrar la implementación los conceptos explicados en este documento en el siguiente archivo:
 
-[Ver Jupyter Notebook del proyecto](https://github.com/veroValdes/Proyecto-Final/blob/main/main.ipynb)
+[Ver Jupyter Notebook del proyecto]([https://github.com/veronicajujuy/proyecto-final/blob/main/main.ipynb])
 
 Esta notebook contiene ejemplos prácticos de la implementación de los patrones de diseño, consultas SQL avanzadas y pruebas unitarias ejecutadas contra la base de datos.
 
@@ -993,6 +993,6 @@ El índice sobre ProductName acelera de manera significativa las búsquedas, fil
 Esto mejora el rendimiento de reportes, filtros y búsquedas en los sistemas que consumen la base de datos, brindando una mejor experiencia de usuario y menor carga sobre el servidor.
 
 
-## 👩‍💻 Autor
+## Autor
 
 Proyecto desarrollado por Veronica Valdez como parte del Proyecto Final del Curso Data Engineering
