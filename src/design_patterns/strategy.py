@@ -9,13 +9,18 @@ class ReportStrategy(ABC):
 
     @abstractmethod
     def generate_report(self, data: pd.DataFrame, key, ascending: bool) -> pd.DataFrame:
+        """
+        data: DataFrame con datos originales de ventas.
+        key: nombre de la columna sobre la que ordenar.
+        ascending: orden ascendente (True) o descendente (False).
+        Devuelve un DataFrame procesado para el informe.
+        """
         pass
 
 
 class TotalSalesByEmployee(ReportStrategy):
     """
-    Esta clase genera un informe de ventas por empleado, mostrando el total de ventas
-    por cada vendedor.
+    Esta clase genera un informe de ventas por cada vendedor, mostrando por cada uno el total de ventas realizadas.
 
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,
@@ -45,8 +50,7 @@ class TotalSalesByEmployee(ReportStrategy):
 
 class AverageSalesByEmployee(ReportStrategy):
     """
-    Esta clase genera un informe de ventas por empleado, mostrando el promedio de ventas
-    por cada vendedor.
+    Esta clase genera un informe de ventas por vendedor, mostrando por cada uno el promedio de ventas.
 
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,
@@ -80,8 +84,7 @@ class AverageSalesByEmployee(ReportStrategy):
 
 class ProductSalesByEmployee(ReportStrategy):
     """
-    Esta clase genera un informe de ventas por empleado, mostrando la cantidad de productos
-    vendidos por cada vendedor.
+    Esta clase genera un informe de ventas por empleado, mostrando por cada uno la cantidad de productos vendidos.
 
     Args:
         df (pd.DataFrame): DataFrame que contiene las ventas,

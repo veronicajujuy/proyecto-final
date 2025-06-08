@@ -45,9 +45,7 @@ class ReportBuilder:
 
     def add_report(self, strategy: ReportStrategy):
         """
-        Agrega una nueva estrategia de reporte junto con su clave de ordenamiento.
-        Cada estrategia usa su propia // clave (key) y ascendente (ascending)
-        para ordenar el DataFrame que ella produce.
+        Agrega una nueva estrategia de reporte al builder.
         """
         if self.df is None:
             raise ValueError("Debe existir un DataFrame antes de agregar informes.")

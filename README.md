@@ -1,4 +1,5 @@
 # Proyecto Final - Data Engineering
+## Avance 2
 
 ## 🛠️ Características Implementadas
 
@@ -7,29 +8,35 @@
   Se implementó el mapeo de todas las clases modeladas a las ya cargadas en la base de datos.
 
 - 🔌 **Conexión a base de datos con SQLAlchemy**:  
-  Implementación del patrón Singleton para asegurar una única instancia de conexión a la base de datos, optimizando recursos.
+  Implementación del patrón **Singleton** en la clase `DBConnection` para asegurar una única instancia de conexión y administración de sesiones en todo el sistema, previniendo duplicidad de conexiones y problemas de concurrencia.  
+  Se utiliza `scoped_session` para gestionar sesiones de forma segura incluso en posibles entornos multi-hilo o múltiples kernels (Jupyter/consola).
 
 - 🧠 **Patrones de Diseño**:
-  - **Singleton**: Conexión a base de datos única y centralizada.
-  - **Factory**: Creación de objetos `SalesSummary` y `CustomerLocationInfo` a partir de DataFrames.
-  - **Strategy**: Generación de reportes específicos de ventas (totales, promedios, productos).
-  - **Builder**: Construcción flexible de reportes combinados a partir de estrategias individuales.
+  - **Singleton**: Única instancia de conexión a la base.
+  - **Factory**: Construcción de objetos `SalesSummary` y `CustomerLocationInfo` a partir de Series de pandas, desacoplando la lectura de datos de su uso en lógica de negocio y presentación.
+  - **Strategy**: Generación flexible de distintos tipos de reportes (totales, promedios, conteos) a partir del mismo DataFrame.
+  - **Builder**: Armado fluido y declarativo de reportes combinados o individuales, encadenando estrategias de análisis.
 
 - 📊 **Análisis de datos en Jupyter Notebook**:  
   Consultas SQL complejas convertidas a DataFrames de pandas, visualización y generación de reportes.
 
 - ✅ **Pruebas unitarias con pytest**:  
-  Tests exhaustivos para:
-  - Patrones de diseño (Singleton, Factory, Strategy, Builder)
-  - Validación de relaciones ORM
-  - Verificación de integridad de datos
+  - Validación de patrones de diseño (Singleton, Factory, Strategy, Builder)
+  - Pruebas sobre el mapeo ORM y las relaciones entre entidades
+  - Chequeo de integridad y consistencia de los datos
 
 ---
 
 ## 📁 Estructura del Proyecto
 
-```
+```css
 proyecto_final/
+├── data/
+│   │   └── categories.csv        # archivos .csv
+│   │   └── ...
+│   │   └── sales.csv
+├── sql/
+│   │   └── load_data.sql        # script para cargar los .csv a la base de datos
 ├── src/
 │   ├── db/
 │   │   └── database.py        # Conexión a BD con patrón Singleton
@@ -62,30 +69,29 @@ proyecto_final/
 ## Desarrollo
 
 - 🧩 **Modelos ORM con SQLAlchemy**:  
-  Clases `Product`, `Customer`, `Sale`, `Country`, `City`, `Employee` y `Category` que implementan patrones OOP:
-  - Abstracción de tablas como objetos Python
-  - Relaciones entre entidades a través de `relationship`
-  - Documentación completa mediante docstrings
+  Las clases `Product`, `Customer`, `Sale`, `Country`, `City`, `Employee` y `Category` mapean las tablas existentes de MySQL y aplican POO:
+- **Abstracción**: Cada tabla se representa como una clase Python.
+- **Relaciones**: Se utilizan `relationship` y claves foráneas para modelar las asociaciones entre entidades (por ejemplo, cliente-ciudad, venta-producto-empleado).
+- **Documentación y claridad**: Cada clase y atributo incluye docstrings para facilitar su uso y extensión.
 
 ## 💡 Implementación de Patrones de Diseño
 
 ### 🔄 Patrón Singleton
 Aplicado en `DBConnection` para garantizar una única instancia de conexión a la base de datos:
 ```python
-# Ejemplo simplificado
 class DBConnection:
     _instance = None
-    
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.engine = create_engine(DATABASE_URL)
+            cls._instance.Session = scoped_session(sessionmaker(bind=cls._instance.engine))
         return cls._instance
 ```
 
 ### 🔄 Patrón Factory
 
-Implementado en `SalesSummary` y `CustomerLocationInfo` para crear objetos estructurados dede un DataFrame
+Las clases `SalesSummary` y `CustomerLocationInfo` aplican Factory para crear objetos de dominio a partir de filas de un DataFrame
 
 ```python
 # Ejemplo de uso
@@ -129,7 +135,7 @@ reports["CombinedReport"]
 
 ### 📝 Consultas implementadas
 
-El proyecto incluye consultas SQL complejas ejecutadas y convertidas en dataframes
+El sistema ejecuta queries avanzadas, transformando los resultados en DataFrames para análisis y visualización:
 
 ```python
 # Ejemplo de query transformada a DataFrame
@@ -163,6 +169,9 @@ Tests realizados para ser ejecutados en consola
   - Validación de atributos y tipos de datos.
   - Integridad de datos entre tablas relacionadas.
 
+## 🔐 Seguridad y mejores prácticas
+- Variables de entorno y archivo `.env`:
+Todas las credenciales y datos sensibles se almacenan en `.env` y nunca se suben al repositorio (.gitignore), siguiendo buenas prácticas de seguridad y preparación para despliegues reales.
 
 ## 👩‍💻 Autor
 

@@ -16,10 +16,10 @@ class SalesSummary(BaseFactory):
     """
     Esta clase devuelve un resumen de las ventas con el nombre del producto, el nombre del cliente,
     el nombre del empleado, la cantidad vendida y el precio total de la venta,
-    a partir de un DataFrame de ventas.
+    a partir de la información provista por un DataFrame de ventas.
     Antes de usar esta clase, asegúrate de que el DataFrame contiene las columnas necesarias.
 
-    Ejemplo de query para obtener los datos (usar en Jupyter Notebook o similar):
+    Ejemplo de query para obtener los datos (IMPORTANTE! Esta query debe convertirse en un DataFrame antes de usar esta clase):
 
     ```sql
     select SalesID, s.ProductID, ProductName, Quantity, TotalPrice, c.CustomerID, coalesce(concat(c.FirstName, " ", c.MiddleInitial, ". ", c.LastName), "Sin nombre") as CustomerName,
@@ -97,7 +97,7 @@ class CustomerLocationInfo(BaseFactory):
     Esta clase devuelve la información del cliente a partir de un DataFrame de clientes.
     Antes de usar esta clase, asegúrate de que el DataFrame contiene las columnas necesarias.
 
-    Ejemplo de query para obtener los datos (usar en Jupyter Notebook o similar):
+    Ejemplo de query para obtener los datos. (IMPORTANTE! Esta query debe convertirse en un DataFrame antes de usar esta clase):
 
         ```sql
         select SalesID, s.ProductID, ProductName, Quantity, TotalPrice, c.CustomerID, coalesce(concat(c.FirstName, " ", c.MiddleInitial, ". ", c.LastName), "Sin nombre") as CustomerName,
