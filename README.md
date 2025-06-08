@@ -62,7 +62,7 @@ proyecto_final/
 
 Puedes encontrar la implementación los conceptos explicados en este documento en el siguiente archivo:
 
-[Ver Jupyter Notebook del proyecto]([https://github.com/veronicajujuy/proyecto-final/blob/main/main.ipynb])
+[Ver Jupyter Notebook del proyecto](https://github.com/veronicajujuy/proyecto-final/blob/main/main.ipynb)
 
 Esta notebook contiene ejemplos prácticos de la implementación de los patrones de diseño, consultas SQL avanzadas y pruebas unitarias ejecutadas contra la base de datos.
 
