@@ -97,3 +97,32 @@ class DBConnection:
                 return pd.DataFrame(result.fetchall(), columns=result.keys())
         except Exception as e:
             raise RuntimeError(f"Error al ejecutar la consulta: {str(e)}")
+
+    def call_procedure(self, name: str, args: list = None) -> pd.DataFrame:
+        """
+        Ejecuta un stored procedure y devuelve el último result set como DataFrame.
+        """
+        raw = self.engine.raw_connection()
+        try:
+            cursor = raw.cursor()
+            cursor.callproc(name, args or [])
+            rows, cols = [], []
+            for rs in cursor.stored_results():
+                rows = rs.fetchall()
+                cols = rs.column_names
+            return pd.DataFrame(rows, columns=cols)
+        finally:
+            cursor.close()
+            raw.close()
+
+    def query_view(
+        self, view_name: str, where: str = None, params: dict = None
+    ) -> pd.DataFrame:
+        """
+        Hace un SELECT * desde una vista (o tabla), opcionalmente filtrando.
+        """
+        sql = f"SELECT * FROM {view_name}"
+        if where:
+            sql += f" WHERE {where}"
+        # Usa execute_query para todo el trabajo
+        return self.execute_query(sql, params)
