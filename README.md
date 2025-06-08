@@ -1,5 +1,14 @@
 # Documentación Técnica - Proyecto Integrador
 
+## Índice
+
+1. [Descripción General](#descripción-general)
+2. [Estructura del Proyecto](#estructura-del-proyecto)
+3. [Primer Avance](#primer-avance)
+4. [Segundo Avance](#segundo-avance)
+5. [Tercer Avance](#tercer-avance)
+8. [Autor](#autor)
+
 ## Descripción General
 
 Este documento recopila el desarrollo, las decisiones técnicas y la justificación de cada etapa del Proyecto Integrador de Análisis de Ventas.
@@ -15,6 +24,47 @@ El proyecto se organiza en tres avances principales:
 
 Cada sección documenta los pasos realizados, la justificación de las elecciones técnicas y la forma en que cada avance contribuye a una solución integral de análisis de ventas.
 
+## Estructura del Proyecto
+```css
+proyecto_final/
+├── src/
+│   ├── db/
+│   │   └── database.py        # Conexión a BD con patrón Singleton
+│   ├── models/                # Modelos ORM
+│   │   ├── category.py
+│   │   ├── customer.py
+│   │   ├── product.py
+│   │   ├── employee.py
+│   │   └── sale.py
+│   ├── design_patterns/
+│   │   ├── factory.py         # Patrón Factory
+│   │   ├── strategy.py        # Patrón Strategy
+│   │   └── builder.py         # Patrón Builder
+│   └── utils/
+│       └── logger.py          # Sistema de logs configurado
+│
+├── tests/
+│   ├── test_singleton_instance.py  # Tests para patrón Singleton
+│   ├── test_factory.py             # Tests para patrón Factory
+│   ├── test_strategy.py            # Tests para patrón Strategy
+│   ├── test_builder.py             # Tests para patrón Builder
+│   └── test_tablas_base_datos.py   # Tests para relaciones ORM
+│
+├── sql/
+│   └── load_data.sql          # Script para carga de datos
+│
+├── config.py                  # Configuración centralizada
+├── main.ipynb                 # Notebook principal con implementación y demostraciones
+└── README.md                  # Documentación del proyecto
+```
+
+### Exploración en Jupyter Notebook
+
+Puedes encontrar la implementación los conceptos explicados en este documento en el siguiente archivo:
+
+[Ver Jupyter Notebook del proyecto](https://github.com/veroValdes/Proyecto-Final/blob/main/main.ipynb)
+
+Esta notebook contiene ejemplos prácticos de la implementación de los patrones de diseño, consultas SQL avanzadas y pruebas unitarias ejecutadas contra la base de datos.
 
 # **Primer Avance**
 
