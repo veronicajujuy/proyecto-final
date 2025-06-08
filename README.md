@@ -901,6 +901,48 @@ La facilidad de la implementación de una vista, me llevó a elegir este tipo de
 * Puede ser consumida fácilmente desde Python o herramientas de BI, sin tener que conocer la lógica interna de agregación.
 * Mejora la legibilidad y modularidad del modelo de datos, separando los datos operacionales (sales, products) de las vistas analíticas.
 
+## Optimización y análisis de rendimiento: índices
+
+Ejemplo de índice y su impacto en el rendimiento
+
+`CREATE INDEX idx_products_name ON products(ProductName)`;
+
+**¿Qué hace este índice?**
+
+Este comando crea un índice no único sobre la columna ProductName de la tabla products. El índice es una estructura (habitualmente un árbol B+) que almacena los valores de la columna ordenados y permite búsquedas rápidas.
+
+**¿Cómo optimiza el rendimiento?**
+
+Sin este índice, cuando se ejecuta una consulta como:
+
+```sql
+    SELECT * FROM products WHERE ProductName = 'Café molido';
+```
+
+el motor de base de datos debe recorrer toda la tabla (full table scan) para buscar coincidencias, lo cual es ineficiente si hay muchos registros.
+
+Con el índice `idx_products_name`, MySQL puede localizar las filas deseadas de forma mucho más eficiente, consultando primero el índice y luego recuperando los datos completos. El tiempo de búsqueda disminuye considerablemente, pasando de O(n) a O(log n).
+
+Casos en los que ayuda:
+
+Consultas de búsqueda exacta por nombre de producto:
+
+```sql
+SELECT * FROM products WHERE ProductName = 'Café molido';
+```
+
+Consultas con comodines
+```sql
+SELECT * FROM products WHERE ProductName LIKE 'Caf%';
+```
+
+**Resumen:**
+
+El índice sobre ProductName acelera de manera significativa las búsquedas, filtrados y ordenamientos que involucran esa columna, especialmente en tablas grandes.
+
+Esto mejora el rendimiento de reportes, filtros y búsquedas en los sistemas que consumen la base de datos, brindando una mejor experiencia de usuario y menor carga sobre el servidor.
+
+
 ## 👩‍💻 Autor
 
 Proyecto desarrollado por Veronica Valdez como parte del Proyecto Final del Curso Data Engineering

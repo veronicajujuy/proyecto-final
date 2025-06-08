@@ -126,3 +126,10 @@ class DBConnection:
             sql += f" WHERE {where}"
         # Usa execute_query para todo el trabajo
         return self.execute_query(sql, params)
+
+    def execute_ddl(self, query: str):
+        try:
+            with self.engine.connect() as connection:
+                connection.execute(text(query))
+        except Exception as e:
+            raise RuntimeError(f"Error al ejecutar DDL: {e}")
